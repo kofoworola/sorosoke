@@ -15,7 +15,7 @@ var (
 	// twitter api credentials
 	apiKey           = os.Getenv("API_KEY")
 	apiSecret        = os.Getenv("API_SECRET")
-	oauthToken       = os.Getenv("OATH_TOKEN")
+	oauthToken       = os.Getenv("OAUTH_TOKEN")
 	oauthTokenSecret = os.Getenv("OAUTH_TOKEN_SECRET")
 
 	// contentFile is a json file with a list of text content that will be sent alongside each countdown.
@@ -64,6 +64,7 @@ func main() {
 	if err := TweetAll(tweets); err != nil {
 		log.Fatalf("ERROR: %v", err)
 	}
+	fmt.Println("Done")
 
 }
 

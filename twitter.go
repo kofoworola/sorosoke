@@ -15,6 +15,11 @@ type Tweet struct {
 	Handle string `json:"screen_name"`
 }
 
+type errorRespoonse struct {
+	Request string `json:"request"`
+	Error   string `json:"error"`
+}
+
 func TweetAll(tweets []string) error {
 	config := oauth1.NewConfig(apiKey, apiSecret)
 	token := oauth1.NewToken(oauthToken, oauthTokenSecret)
@@ -43,6 +48,14 @@ func SendTweet(content, reply_id, replyHandle string, client *http.Client) (*Twe
 	if err != nil {
 		return nil, fmt.Errorf("error sending tweet: %w", err)
 	}
+	if resp.StatusCode != http.StatusOK && resp.StatusCode != http.StatusCreated {
+		var errResponse errorRespoonse
+		if err := json.NewDecoder(resp.Body).Decode(&errResponse); err != nil {
+			return nil, fmt.Errorf("error decoding error response: %w", err)
+		}
+		return nil, fmt.Errorf("error code %s: %s", resp.Status, errResponse.Error)
+	}
+
 	var tweet Tweet
 	if err := json.NewDecoder(resp.Body).Decode(&tweet); err != nil {
 		return nil, fmt.Errorf("error decoding response: %w", err)
