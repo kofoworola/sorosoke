@@ -64,7 +64,7 @@ func main() {
 	if err := TweetAll(tweets); err != nil {
 		log.Fatalf("ERROR: %v", err)
 	}
-	fmt.Println("Done")
+	log.Printf("Done at %s", time.Now().Format(time.RFC822))
 
 }
 

@@ -1,0 +1,8 @@
+language: go
+
+go:
+  - "1.15.3"
+
+scrpt:
+  - go test
+  - go build

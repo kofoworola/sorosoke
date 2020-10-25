@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/json"
+	"os"
 	"testing"
 )
 
@@ -15,5 +17,22 @@ func TestSplitTweets(t *testing.T) {
 	}
 	if firstChar := string(split[1][0]); firstChar != "i" {
 		t.Fatalf("expected first letter of second sentence to begin with i got %s", firstChar)
+	}
+}
+
+func TestJsonContent(t *testing.T) {
+	contentFile := os.Getenv("TWEET_CONTENT")
+	if contentFile == "" {
+		contentFile = "./content.json"
+	}
+
+	file, err := os.OpenFile(contentFile, os.O_RDONLY, 775)
+	if err != nil {
+		t.Fatalf("error opening file %s: %v", contentFile, err)
+	}
+
+	var tweets []string
+	if err := json.NewDecoder(file).Decode(&tweets); err != nil {
+		t.Fatalf("error decoding json: %v", err)
 	}
 }
