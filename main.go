@@ -29,7 +29,7 @@ var (
 const (
 	parseFormat = "02/01/2006 15:04"
 	// startDate is the starting reference date used to generate the percentage counter
-	startDay = "17/10/2020 12:00"
+	startDay = "29/05/2019 12:00"
 	// electionDay is February 18 2023 as announced by INEC
 	electionDay   = "18/02/2023 12:00"
 	maxChars      = 280
